@@ -1,6 +1,6 @@
 Because the quay user password is hash-encrypted and cannot be modified directly in the database, the general idea is to create a new test user with a known password, and then use the known hash-encrypted password to replace it with that of the quayadmin user. Password, so that the password of quayadmin is the same as the password of the test user, so that you can log in to the quayadmin super user, and then delete the test user.
 
-- Create a new test user testpassword on the quay page
+- Create a new test user testpassword on the quay web page
 - Switch to the project that deploys quay-registry
   ```
   oc project quay-enterprise
