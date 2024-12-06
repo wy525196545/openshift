@@ -44,3 +44,15 @@ Because the quay user password is hash-encrypted and cannot be modified directly
   DELETE FROM public.user  WHERE username = 'testpassword';
   ```
 - (tip)Please keep your user password carefully. Please do not directly operate the database unless it is an emergency cleanup.
+
+- Query all tables in the database
+```
+SELECT table_schema, table_name
+FROM information_schema.tables
+WHERE table_type = 'BASE TABLE'
+ORDER BY table_schema, table_name;
+```
+- Query table structure
+```
+\d <tablename>
+```
