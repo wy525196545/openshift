@@ -56,3 +56,8 @@ ORDER BY table_schema, table_name;
 ```
 \d <tablename>
 ```
+
+Update quay's configuration file
+```
+oc set data secret/config-bundle-secret --from-file=config.yaml=config.yaml
+```
