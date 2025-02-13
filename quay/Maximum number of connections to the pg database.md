@@ -30,10 +30,10 @@ podman ps
 - The default number of database connections is only 100, which may not meet the user's usage requirements. You need to modify the number of database connections.
   
 - add the POSTGRESQL_MAX_CONNECTIONS parameter when starting podman.
-  ```
+```
 podman run -d --name postgresql_database     -v /var/lib/pgsql/data:/var/lib/pgsql/data:Z      -e POSTGRESQL_USER=quayuser -e POSTGRESQL_PASSWORD=quaypass   -e POSTGRESQL_MAX_CONNECTIONS='2000'  -e POSTGRESQL_DATABASE=quaydb -p 5432:5432     registry.redhat.io/rhel8/postgresql-13:1-109
 
-  ```
+```
 ##### Quay Operator Deployment
 - Switch to the project that deploys quay-registry
   ```
