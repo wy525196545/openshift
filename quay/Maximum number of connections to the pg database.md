@@ -61,7 +61,7 @@ podman run -d --name postgresql_database     -v /var/lib/pgsql/data:/var/lib/pgs
   example-registry-quay-database=> SHOW max_connections;
    max_connections
   -----------------
-  2000
- (1 row)
-```
+   2000
+  (1 row)
+  ```
 
