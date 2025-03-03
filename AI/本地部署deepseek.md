@@ -3,6 +3,7 @@
 Ollama是一个可以在本地运行和管理大模型的神器，完全本地运行，而且支持多种模型，包括但不限于Llama、DeepSeek、Qwen、Gemma等等。
 登录网站，
 - 直接去下载页：https://ollama.com/download
+
 ![alt text](image.png)
 直接下载macOS版本的程序，下载后是一个压缩包，二话不说，直接解压，这个程序可以直接点击运行，但是建议你拖到「应用程序」目录下，便于用的时候以后好找。
 
