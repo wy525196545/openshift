@@ -453,11 +453,60 @@ spec:
       emptyDir: {}
 ```
 
+### Mounting a ConfigMap as a Volume source 
+- The example below illustrates how to mount a ConfigMap to act as a Volume source:
+```
+spec:
+  params:
+    - name: CFGNAME
+      type: string
+      description: Name of config map
+    - name: volumeName
+      type: string
+      description: Name of volume
+  steps:
+    - image: ubuntu
+      script: |
+        #!/usr/bin/env bash
+        cat /var/configmap/test        
+      volumeMounts:
+        - name: "$(params.volumeName)"
+          mountPath: /var/configmap
+
+  volumes:
+    - name: "$(params.volumeName)"
+      configMap:
+        name: "$(params.CFGNAME)"
+```
+## Debugging 
+This section describes techniques for debugging the most common issues in Tasks.
 
 
-
-
-
+#### Inspecting the file structure 
+- A common issue when configuring Tasks stems from not knowing the location of your data. For the most part, files ingested and output by your Task live in the /workspace directory, but the specifics can vary. To inspect the file structure of your Task, add a step that outputs the name of every file stored in the /workspace directory to the build log. For example:
+```
+- name: build-and-push-1
+  image: ubuntu
+  command:
+    - /bin/bash
+  args:
+    - -c
+    - |
+      set -ex
+      find /workspace      
+```
+- You can also choose to examine the contents of every file used by your Task:
+```
+- name: build-and-push-1
+  image: ubuntu
+  command:
+    - /bin/bash
+  args:
+    - -c
+    - |
+      set -ex
+      find /workspace | xargs cat      
+```
 
 
 

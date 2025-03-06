@@ -41,4 +41,3 @@ spec:
         args:
           - --destination=gcr.io/my-project/gohelloworld
 ```
-
