@@ -186,16 +186,123 @@ steps:
 ### Specifying Parameters
 You can specify parameters, such as compilation flags or artifact names, that you want to supply to the Task at execution time. Parameters are passed to the Task from its corresponding TaskRun.
 
+- Parameter name
+Parameter name format:
 
+  - Must only contain alphanumeric characters, hyphens (-), underscores (_), and dots (.). However, object parameter name and its key names can’t contain dots (.). See the reasons in the third item added in this PR.
+  - Must begin with a letter or an underscore (_).
 
+For example, foo.Is-Bar_ is a valid parameter name for string or array type, but is invalid for object parameter because it contains dots. On the other hand, barIsBa$ or 0banana are invalid for all types.
+> NOTE:
+> 1 Parameter names are case insensitive. For example, APPLE and apple will be treated as equal. If they appear in the same TaskSpec’s params, it will be rejected as invalid.
+ 2.If a parameter name contains dots (.), it must be referenced by using the bracket notation with either single or double quotes i.e. $(params['foo.bar']), $(params["foo.bar"]). See the following example for more information.
 
+#### Parameter type
+Each declared parameter has a type field, which can be set to string, array or object.
 
+- object type
 
+object type is useful in cases where users want to group related parameters. For example, an object parameter called gitrepo can contain both the url and the commmit to group related information:
+```
+spec:
+  params:
+    - name: gitrepo
+      type: object
+      properties:
+        url:
+          type: string
+        commit:
+          type: string
+```
+- array type 
 
+array type is useful in cases where the number of compilation flags being supplied to a task varies throughout the Task's execution. array param can be defined by setting type to array. Also, array params only supports string array i.e. each array element has to be of type string.
+```
+spec:
+  params:
+    - name: flags
+      type: array
+```
+- string type
 
+If not specified, the type field defaults to string. When the actual parameter value is supplied, its parsed type is validated against the type field.
 
+The following example illustrates the use of Parameters in a Task. The Task declares 3 input parameters named gitrepo (of type object), flags (of type array) and someURL (of type string). These parameters are used in the steps.args list
 
+> For object parameter, you can only use individual members (aka keys).
+  You can expand parameters of type array inside an existing array using the star operator. In this example, flags contains the star operator: $(params.flags[*]).
+>
+Note: Input parameter values can be used as variables throughout the Task by using variable substitution.
+```
+apiVersion: tekton.dev/v1 # or tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: task-with-parameters
+spec:
+  params:
+    - name: gitrepo
+      type: object
+      properties:
+        url:
+          type: string
+        commit:
+          type: string
+    - name: flags
+      type: array
+    - name: someURL
+      type: string
+    - name: foo.bar
+      description: "the name contains dot character"
+      default: "test"
+  steps:
+    - name: do-the-clone
+      image: some-git-image
+      args: [
+        "-url=$(params.gitrepo.url)",
+        "-revision=$(params.gitrepo.commit)"
+      ]
+    - name: build
+      image: my-builder
+      args: [
+        "build",
+        "$(params.flags[*])",
+        # It would be equivalent to use $(params["someURL"]) here,
+        # which is necessary when the parameter name contains '.'
+        # characters (e.g. `$(params["some.other.URL"])`). See the example in step "echo-param"
+        'url=$(params.someURL)',
+      ]
+    - name: echo-param
+      image: bash
+      args: [
+        "echo",
+        "$(params['foo.bar'])",
+      ]
+```
 
+The following TaskRun supplies the value for the parameter gitrepo, flags and someURL:
+```
+apiVersion: tekton.dev/v1 # or tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: run-with-parameters
+spec:
+  taskRef:
+    name: task-with-parameters
+  params:
+    - name: gitrepo
+      value:
+        url: "abc.com"
+        commit: "c12b72"
+    - name: flags
+      value:
+        - "--set"
+        - "arg1=foo"
+        - "--randomflag"
+        - "--someotherflag"
+    - name: someURL
+      value: "http://google.com"
+```
+gi t
 
 
 
