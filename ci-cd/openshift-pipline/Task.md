@@ -302,21 +302,156 @@ spec:
     - name: someURL
       value: "http://google.com"
 ```
-gi t
+- Default value
 
+Parameter declarations (within Tasks and Pipelines) can include default values which will be used if the parameter is not specified, for example to specify defaults for both string params and array params (full example) :
 
+```
+apiVersion: tekton.dev/v1 # or tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: task-with-array-default
+spec:
+  params:
+    - name: flags
+      type: array
+      default:
+        - "--set"
+        - "arg1=foo"
+        - "--randomflag"
+        - "--someotherflag"
+```
 
+### Specifying Workspaces
+Workspaces allow you to specify one or more volumes that your Task requires during execution. It is recommended that Tasks uses at most one writeable Workspace. For example:
+```
+spec:
+  steps:
+    - name: write-message
+      image: ubuntu
+      script: |
+        #!/usr/bin/env bash
+        set -xe
+        echo hello! > $(workspaces.messages.path)/message        
+  workspaces:
+    - name: messages
+      description: The folder where we write the message to
+      mountPath: /custom/path/relative/to/root
+```
 
+### Specifying Volumes
+Specifies one or more Volumes that the Steps in your Task require to execute in addition to volumes that are implicitly created for input and output resources.
 
+Specifying a Step template
+The stepTemplate field specifies a Container configuration that will be used as the starting point for all of the Steps in your Task. Individual configurations specified within Steps supersede the template wherever overlap occurs.
 
+- In the example below, the Task specifies a stepTemplate field with the environment variable FOO set to bar. The first Step in the Task uses that value for FOO, but the second Step overrides the value set in the template with baz. Additional, the Task specifies a stepTemplate field with the environment variable TOKEN set to public. The last one Step in the Task uses private in the referenced secret to override the value set in the template.
 
+```stepTemplate:
+  env:
+    - name: "FOO"
+      value: "bar"
+    - name: "TOKEN"
+      value: "public"
+steps:
+  - image: ubuntu
+    command: [echo]
+    args: ["FOO is ${FOO}"]
+  - image: ubuntu
+    command: [echo]
+    args: ["FOO is ${FOO}"]
+    env:
+      - name: "FOO"
+        value: "baz"
+  - image: ubuntu
+    command: [echo]
+    args: ["TOKEN is ${TOKEN}"]
+    env:
+      - name: "TOKEN"
+        valueFrom:
+          secretKeyRef:
+            key: "token"
+            name: "test"
+---
+# The secret 'test' part data is as follows.
+data:
+  # The decoded value of 'cHJpdmF0ZQo=' is 'private'.
+  token: "cHJpdmF0ZQo="
+```
+## Code examples
+### Building and pushing a Docker image
+The following example Task builds and pushes a Dockerfile-built image.
+- Note: Building a container image using docker build on-cluster is very unsafe and is shown here only as a demonstration. Use kaniko instead.
+```
+spec:
+  params:
+    # This may be overridden, but is a sensible default.
+    - name: dockerfileName
+      type: string
+      description: The name of the Dockerfile
+      default: Dockerfile
+    - name: image
+      type: string
+      description: The image to build and push
+  workspaces:
+  - name: source
+  steps:
+    - name: dockerfile-build
+      image: gcr.io/cloud-builders/docker
+      workingDir: "$(workspaces.source.path)"
+      args:
+        [
+          "build",
+          "--no-cache",
+          "--tag",
+          "$(params.image)",
+          "--file",
+          "$(params.dockerfileName)",
+          ".",
+        ]
+      volumeMounts:
+        - name: docker-socket
+          mountPath: /var/run/docker.sock
 
+    - name: dockerfile-push
+      image: gcr.io/cloud-builders/docker
+      args: ["push", "$(params.image)"]
+      volumeMounts:
+        - name: docker-socket
+          mountPath: /var/run/docker.sock
 
+  # As an implementation detail, this Task mounts the host's daemon socket.
+  volumes:
+    - name: docker-socket
+      hostPath:
+        path: /var/run/docker.sock
+        type: Socket
+```
+### Mounting multiple Volumes
+The example below illustrates mounting multiple Volumes:
+```
+spec:
+  steps:
+    - image: ubuntu
+      script: |
+        #!/usr/bin/env bash
+        curl https://foo.com > /var/my-volume        
+      volumeMounts:
+        - name: my-volume
+          mountPath: /var/my-volume
 
+    - image: ubuntu
+      script: |
+        #!/usr/bin/env bash
+        cat /etc/my-volume        
+      volumeMounts:
+        - name: my-volume
+          mountPath: /etc/my-volume
 
-
-
-
+  volumes:
+    - name: my-volume
+      emptyDir: {}
+```
 
 
 
