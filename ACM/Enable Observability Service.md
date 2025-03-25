@@ -34,24 +34,24 @@ Notes:
     ```
     oc create -f thanos-object-storage.yaml -n open-cluster-management-observability
     ```
-View the following examples of secrets for the supported object stores 
-```
-apiVersion: v1
-kind: Secret
-metadata:
-  name: thanos-object-storage
-  namespace: open-cluster-management-observability
-type: Opaque
-stringData:
-  thanos.yaml: |
-    type: s3
-    config:
-      bucket: acm-bucket
-      endpoint: minio-minio.apps.ocp4.example.com
-      insecure: true
-      access_key: minioadmin
-      secret_key: minioadmin
-```
+    - View the following examples of secrets for the supported object stores 
+        ```
+        apiVersion: v1
+        kind: Secret
+        metadata:
+        name: thanos-object-storage
+        namespace: open-cluster-management-observability
+        type: Opaque
+        stringData:
+        thanos.yaml: |
+        type: s3
+        config:
+            bucket: acm-bucket
+            endpoint: minio-minio.apps.ocp4.example.com
+            insecure: true
+            access_key: minioadmin
+            secret_key: minioadmin
+        ```
 #### Creating the MultiClusterObservability custom resource 
 - Create the MultiClusterObservability custom resource YAML file named multiclusterobservability_cr.yaml.
 View the following default YAML file for observability:
