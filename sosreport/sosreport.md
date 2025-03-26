@@ -1,28 +1,28 @@
-# 如何分析sosreport文件
+# How to Analyze sosreport Files
 
-`sosreport` 是一个用于收集系统诊断信息的工具。分析 `sosreport` 文件可以帮助你了解系统的状态和潜在的问题。以下是分析 `sosreport` 文件的一些步骤：
+`sosreport` is a tool used to collect system diagnostic information. Analyzing `sosreport` files can help you understand the system's state and identify potential issues. Below are the steps to analyze a `sosreport` file:
 
-1. **解压缩文件**：
+1. **Extract the File**:
     ```bash
     tar -xvf sosreport-*.tar.xz
     ```
 
-2. **查看系统信息**：
-    解压后会生成一个目录，进入该目录，查看 `sos_commands/general/` 下的文件，可以获取系统的基本信息，如 `uname -a`、`uptime` 等。
+2. **View System Information**:
+    After extraction, a directory will be created. Navigate into the directory and check the files under `sos_commands/general/` to gather basic system information, such as `uname -a` and `uptime`.
 
-3. **检查日志文件**：
-    查看 `var/log/` 目录下的日志文件，如 `messages`、`dmesg`、`secure` 等，查找错误和警告信息。
+3. **Inspect Log Files**:
+    Look into the `var/log/` directory for log files like `messages`, `dmesg`, and `secure` to find errors and warnings.
 
-4. **分析配置文件**：
-    查看 `etc/` 目录下的配置文件，检查系统和服务的配置是否正确。
+4. **Analyze Configuration Files**:
+    Check the configuration files under the `etc/` directory to verify the correctness of system and service configurations.
 
-5. **检查资源使用情况**：
-    查看 `sos_commands/process/` 下的文件，如 `ps`、`top` 等，了解系统的资源使用情况。
+5. **Check Resource Usage**:
+    Review files under `sos_commands/process/`, such as `ps` and `top`, to understand the system's resource usage.
 
-6. **网络配置和状态**：
-    查看 `sos_commands/networking/` 下的文件，如 `ifconfig`、`netstat` 等，检查网络配置和状态。
+6. **Network Configuration and Status**:
+    Examine files under `sos_commands/networking/`, such as `ifconfig` and `netstat`, to check network configuration and status.
 
-### 通过自动化脚本分析
+### Automated Analysis with Scripts
 ```
 https://github.com/vlours/sos4ocp
 ```
