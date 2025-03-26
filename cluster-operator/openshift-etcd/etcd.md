@@ -1,23 +1,23 @@
-# 如何查询etcd的key
+# How to Query etcd Keys
 
-要查询OpenShift中etcd数据库中前10个最多的key，可以使用etcdctl命令行工具。以下是一些常用的查询命令：
+To query the top 10 most frequent keys in the etcd database of OpenShift, you can use the `etcdctl` command-line tool. Below are some commonly used query commands:
 
-## 查询所有key
+## Query All Keys
 
 ```sh
 etcdctl get "" --prefix --keys-only
 ```
 
-## 查询带有特定前缀的key
+## Query Keys with a Specific Prefix
 
 ```sh
 etcdctl get /your/prefix --prefix
 ```
 
-## 查询前10个最多的key
+## Query the Top 10 Most Frequent Keys
 
-要查询etcd数据库中前10个最多的key，可以使用以下命令：
+To find the top 10 most frequent keys in the etcd database, use the following command:
 
 ```sh
-etcdctl get / --prefix --keys-only | sed '/^$/d' | cut -d/ -f3 | sort | uniq -c | sort -rn| head
+etcdctl get / --prefix --keys-only | sed '/^$/d' | cut -d/ -f3 | sort | uniq -c | sort -rn | head
 ```

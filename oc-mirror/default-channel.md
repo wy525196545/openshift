@@ -1,12 +1,12 @@
 #### oc-mirror error
-运行oc-mirror命令报错
+Running the `oc-mirror` command results in the following error:
 ```
 $ oc-mirror --config imageset-config-yaml file:// 
 ...
 error generating diff: the current default channel "stable-6.0" for package "cluster-logging" could not be determined...
 ...
 ```
-检查imageset-config.yaml
+Check the `imageset-config.yaml` file:
 ```
 apiVersion: mirror.openshift.io/v1alpha2
 kind: ImageSetConfiguration
@@ -24,7 +24,7 @@ mirror:
               minVersion: '5.9.5'
               maxVersion: '5.9.5'
 ```
-根据报错提示下载的operator版本不是当前默认的channel，需要在imageset-config.yaml里加入defaultChannel信息来下载特定的channel版本。
+According to the error message, the downloaded operator version is not the current default channel. You need to add the `defaultChannel` information in the `imageset-config.yaml` file to download a specific channel version.
 ```
 apiVersion: mirror.openshift.io/v1alpha2
 kind: ImageSetConfiguration
