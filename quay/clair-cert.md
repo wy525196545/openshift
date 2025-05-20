@@ -1,4 +1,3 @@
-
 #### When the user manages the clair scanner, the clair-app pod log may show "tls: failed to verify certificate: x509: certificate signed by unknown authority"
 
 - Users are required to add the CA certificate to the /var/run/certs/ directory
