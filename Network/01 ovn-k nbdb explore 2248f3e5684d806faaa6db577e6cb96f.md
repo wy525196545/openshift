@@ -10,7 +10,7 @@ worker-0   Ready    worker                        11d   v1.31.6
 worker-1   Ready    worker                        11d   v1.31.6
 ```
 
-![image.png](01%20ovn-k%20nbdb%20explore%202248f3e5684d806faaa6db577e6cb96f/image.png)
+![image.png](image.png)
 
 ## Overview of logical switches and logical routers
 
@@ -65,7 +65,7 @@ name                : k8s-master-0
 ....
 ```
 
-![image.png](01%20ovn-k%20nbdb%20explore%202248f3e5684d806faaa6db577e6cb96f/image%201.png)
+![image.png](image%201.png)
 
 ## ovn_cluster_router logical router
 
@@ -123,7 +123,7 @@ rtots-master-0
 
 Then we could improve the architecture image a bit:
 
-![image.png](01%20ovn-k%20nbdb%20explore%202248f3e5684d806faaa6db577e6cb96f/image%202.png)
+![image.png](image%202.png)
 
 ## join, GR_${Node} and ext_${Node}
 
@@ -200,4 +200,4 @@ up                  : false
 
 Then we could add join logical switch, GR and ext_${Node} logical switch to our image finally:
 
-![image.png](01%20ovn-k%20nbdb%20explore%202248f3e5684d806faaa6db577e6cb96f/image%203.png)
+![image.png](image%203.png)

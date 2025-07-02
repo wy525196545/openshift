@@ -1,6 +1,6 @@
 # 03 ovn-k anp and banp
 
-![image.png](03%20ovn-k%20anp%20and%20banp%202248f3e5684d80c8b0f5d2a54ff26f8e/image.png)
+![image.png](image4.png)
 
 Similar to what we did in [netpol](https://www.notion.so/2004a0a52326807e9b85e9efe5db19e8?pvs=21), we use ovsdb-client monitor to track the changes to nbdb. The ANP looks like:
 
