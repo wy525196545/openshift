@@ -59,12 +59,11 @@ Quay 的主要架构组件包括：
 - 审计日志与操作记录查询
 - Web UI 与 API 的常用操作
 - 镜像同步与地理复制的日常维护
-- 常见问题排查与支持渠道
 
 
 ---
 
-## 五、案例分享（可选）Quay 常见排错方法
+## 五、案例分享Quay 常见排错方法
 
 - **服务不可用/登录失败**  
     - 检查 Quay Pod/服务状态，确认所有组件正常运行。
@@ -88,24 +87,6 @@ Quay 的主要架构组件包括：
     - 检查团队、用户、机器人账号的权限配置。
     - 确认仓库的可见性和访问策略设置。
 
-- **常用排查命令与工具**  
-    - `oc get pods -n <namespace>` / `kubectl get pods`
-    - `docker login/push/pull` 日志
-    - Quay Web UI 的系统状态页面
-    - 日志采集与分析工具（如 Loki、ELK）
 
-- **官方文档与社区支持**  
-    - [Red Hat Quay Troubleshooting Guide](https://access.redhat.com/documentation/en-us/red_hat_quay/3/html-single/troubleshooting_guide/index)
-    - Red Hat 支持门户、社区论坛
 
----
-- 某项目如何通过 Quay 提升交付效率  
-- Quay 在 OpenShift 4.x 中的实践
 
----
-
-## 六、总结与 Q&A
-
-- 回顾核心要点  
-- 下一步行动（PoC/试用）  
-- 开放问答与讨论
