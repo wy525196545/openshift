@@ -41,10 +41,10 @@ Quay 的主要架构组件包括：
 
 ## 三、部署方式
 
-- [Red Hat Quay on OpenShift Container Platform](https://docs.redhat.com/en/documentation/red_hat_quay/3.14/html/deploying_the_red_hat_quay_operator_on_openshift_container_platform/index)  
-- [Red Hat Quay Proof of Concept](https://docs.redhat.com/en/documentation/red_hat_quay/3.14/html/proof_of_concept_-_deploying_red_hat_quay/index)
-- [Red Hat Quay - High Availability](https://docs.redhat.com/en/documentation/red_hat_quay/3.14/html/deploy_red_hat_quay_-_high_availability/index)
-- [Creating a mirror registry with mirror registry for Red Hat OpenShift](https://docs.redhat.com/en/documentation/openshift_container_platform/4.16/html/disconnected_installation_mirroring/installing-mirroring-creating-registry) 
+- [Red Hat Quay on OpenShift Container Platform](https://docs.redhat.com/en/documentation/red_hat_quay/3.14/html/deploying_the_red_hat_quay_operator_on_openshift_container_platform/index)  ------》 OCPPlus订阅
+- [Red Hat Quay Proof of Concept](https://docs.redhat.com/en/documentation/red_hat_quay/3.14/html/proof_of_concept_-_deploying_red_hat_quay/index)  ------》Red Hat Quay stand 订阅
+- [Red Hat Quay - High Availability](https://docs.redhat.com/en/documentation/red_hat_quay/3.14/html/deploy_red_hat_quay_-_high_availability/index) ------》Red Hat Quay stand 订阅
+- [Creating a mirror registry with mirror registry for Red Hat OpenShift](https://docs.redhat.com/en/documentation/openshift_container_platform/4.16/html/disconnected_installation_mirroring/installing-mirroring-creating-registry) ------》OCP 订阅
 
 ---
 
